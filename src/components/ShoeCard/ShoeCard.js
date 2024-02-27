@@ -25,11 +25,12 @@ const ShoeCard = ({
   // both on-sale and new-release, but in this case, `on-sale`
   // will triumph and be the variant used.
   // prettier-ignore
-  const variant = typeof salePrice === 'number'
-    ? 'on-sale'
-    : isNewShoe(releaseDate)
-      ? 'new-release'
-      : 'default'
+  const variant =
+    typeof salePrice === 'number'
+      ? 'sale'
+      : isNewShoe(releaseDate)
+        ? 'new-release'
+        : 'default';
 
   return (
     <Link href={`/shoe/${slug}`}>
@@ -37,9 +38,9 @@ const ShoeCard = ({
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
         </ImageWrapper>
-        {variant === 'on-sale' && <SaleFlag>Sale</SaleFlag>}
+        {variant === 'sale' && <CustomFlag variant="sale">Sale</CustomFlag>}
         {variant === 'new-release' && (
-          <NewFlag>Just released!</NewFlag>
+          <CustomFlag variant="new-release">Just released!</CustomFlag>
         )}
         <Spacer size={12} />
         <Row>
@@ -47,11 +48,9 @@ const ShoeCard = ({
           <Price
             style={{
               '--color':
-                variant === 'on-sale'
-                  ? 'var(--color-gray-700)'
-                  : undefined,
+                variant === 'sale' ? 'var(--color-gray-700)' : undefined,
               '--text-decoration':
-                variant === 'on-sale' ? 'line-through' : undefined,
+                variant === 'sale' ? 'line-through' : undefined,
             }}
           >
             {formatPrice(price)}
@@ -59,9 +58,7 @@ const ShoeCard = ({
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
-          {variant === 'on-sale' ? (
-            <SalePrice>{formatPrice(salePrice)}</SalePrice>
-          ) : undefined}
+          {variant === 'sale' && <SalePrice>{formatPrice(salePrice)}</SalePrice>}
         </Row>
       </Wrapper>
     </Link>
@@ -161,24 +158,21 @@ const Flag = styled.div`
       transition: left 200ms;
     }
   }
-
 `;
 
-const SaleFlag = styled(Flag)`
-  background-color: var(--color-primary);
+const CustomFlag = styled(Flag)`
+  background-color: ${props =>
+    props.variant === 'sale'
+      ? 'var(--color-primary)'
+      : 'var(--color-secondary)'
+  };
 
   &::before {
-    background-color: inherit;
-    filter: brightness(0.6);
-  }
-`;
-
-const NewFlag = styled(Flag)`
-  background-color: var(--color-secondary);
-
-  &::before {
-    background-color: inherit;
-    filter: brightness(0.6);
+    background-color: ${props =>
+    props.variant === 'sale'
+      ? 'color-mix(in srgb, var(--color-primary) 70%, black)'
+      : 'color-mix(in srgb, var(--color-secondary) 70%, black)'
+  };
   }
 `;
 
