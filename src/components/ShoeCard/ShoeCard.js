@@ -90,7 +90,7 @@ const Image = styled.img`
   display: block;
   width: 100%;
   transition: transform 600ms;
-  transition-timing-function: cubic-bezier(0.44, 0.21, 0, 1);
+  transition-timing-function: var(--transition-ease);
   transform-origin: center 80%;
   will-change: transform;
 
@@ -141,13 +141,45 @@ const Flag = styled.div`
   font-weight: ${WEIGHTS.bold};
   color: var(--color-white);
   border-radius: 2px;
+  transition: border-color 0.3s;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 3px;
+    width: 100%;
+    left: -100%;
+    transition: left 500ms;
+    transition-timing-function: var(--transition-ease);
+    will-change: left;
+
+    ${Link}:hover &,
+    ${Link}:focus & {
+      left: 0;
+      transition: left 200ms;
+    }
+  }
+
 `;
 
 const SaleFlag = styled(Flag)`
   background-color: var(--color-primary);
+
+  &::before {
+    background-color: inherit;
+    filter: brightness(0.6);
+  }
 `;
+
 const NewFlag = styled(Flag)`
   background-color: var(--color-secondary);
+
+  &::before {
+    background-color: inherit;
+    filter: brightness(0.6);
+  }
 `;
 
 export default ShoeCard;

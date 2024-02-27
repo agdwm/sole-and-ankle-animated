@@ -79,6 +79,12 @@ html {
 
   --color-backdrop: hsl(${COLORS.gray[700]} / 0.8);
 
+  /* Transition timing functions */
+  --transition-ease: cubic-bezier(0.44, 0.21, 0, 1);
+  --transition-ease-in: cubic-bezier(0.75, 0, 1, 1);
+  --transition-ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --transition-ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+
   /*
     Silence the warning about missing Reach Dialog styles
   */
