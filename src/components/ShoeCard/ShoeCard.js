@@ -97,6 +97,8 @@ const Image = styled.img`
     ${Link}:focus & {
       transform: scale(1.1);
       transition: transform 200ms;
+      filter: brightness(1.02)
+   /* */
     }
   }
 `;
@@ -155,7 +157,7 @@ const Flag = styled.div`
     ${Link}:hover &,
     ${Link}:focus & {
       left: 0;
-      transition: left 200ms;
+      transition: left 300ms;
     }
   }
 `;
